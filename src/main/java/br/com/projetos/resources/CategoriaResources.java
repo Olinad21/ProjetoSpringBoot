@@ -11,19 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projetos.Domain.Categoria;
+import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.service.CategoriaService;
+
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResources {
 
 	@Autowired
-	private CategoriaService service;
+	private CategoriaService categoriaService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
+	public ResponseEntity<?> findById(@PathVariable Integer id) throws ObjectNotFoundException {
 
-		Categoria categoria = service.findById(id);
+		Categoria categoria = categoriaService.findById(id);
 		return ResponseEntity.ok().body(categoria);
 
 	}
