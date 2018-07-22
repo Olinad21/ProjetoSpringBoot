@@ -1,0 +1,11 @@
+package br.com.projetos.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import br.com.projetos.Domain.Cliente;
+
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+
+}
