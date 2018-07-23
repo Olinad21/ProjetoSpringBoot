@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -27,13 +26,15 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	private Date Instante;
 
 	@ManyToOne
 	@JoinColumn(name = "endereco_entrega_id")
 	private Endereco enderecoDeEntrega;
 
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -42,7 +43,7 @@ public class Pedido implements Serializable {
 	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
 	Pagamento pagamento;
 
-	@JsonBackReference
+	
 	@OneToMany(mappedBy="pk.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 

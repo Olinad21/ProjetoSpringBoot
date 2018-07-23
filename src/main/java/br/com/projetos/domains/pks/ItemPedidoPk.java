@@ -5,10 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import br.com.projetos.domains.Pedido;
 import br.com.projetos.domains.Produto;
 
@@ -19,12 +15,12 @@ public class ItemPedidoPk implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@JsonManagedReference
+	
 	@ManyToOne
 	@JoinColumn(name="pedido_id")
 	private Pedido pedido;
 	
-	@JsonManagedReference
+	
 	@ManyToOne
 	@JoinColumn(name="produto_id")
 	private Produto produto;
