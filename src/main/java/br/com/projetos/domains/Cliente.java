@@ -1,4 +1,4 @@
-package br.com.projetos.Domain;
+package br.com.projetos.domains;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import br.com.projetos.Domain.Enums.TipoCliente;
+import br.com.projetos.domains.Enums.TipoCliente;
 
 @Entity
 public class Cliente implements Serializable {

@@ -1,11 +1,11 @@
-package br.com.projetos.Domain;
+package br.com.projetos.domains;
 
 
 import java.util.Date;
 
 import javax.persistence.Entity;
 
-import br.com.projetos.Domain.Enums.EstadoPagamento;
+import br.com.projetos.domains.Enums.EstadoPagamento;
 
 @Entity
 public class PagamentoBoleto extends Pagamento {

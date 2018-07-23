@@ -1,49 +1,41 @@
-package br.com.projetos.Domain;
+package br.com.projetos.domains;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import br.com.projetos.Domain.Enums.EstadoPagamento;
-
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Pagamento implements Serializable {
+public class Estado implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer estado;
+	private String nome;
 	
 	@JsonBackReference
-	@OneToOne
-	@JoinColumn(name="pedido_id")
-	@MapsId
-	private Pedido pedido;
-	
-	
-	public Pagamento() {
+	@OneToMany(mappedBy= "estado")
+	private List<Cidade> cidades = new ArrayList<>();
+
+	public Estado() {
 		
 	}
-	
-
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
-		this.estado = estado.getCod();
-		this.pedido = pedido;
+		this.nome = nome;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -53,12 +45,20 @@ public abstract class Pagamento implements Serializable {
 		this.id = id;
 	}
 
-	public EstadoPagamento getEstado() {
-		return EstadoPagamento.toEnum(estado);
+	public String getNome() {
+		return nome;
 	}
 
-	public void setEstado(EstadoPagamento estado) {
-		this.estado = estado.getCod();
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public abstract class Pagamento implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pagamento other = (Pagamento) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,7 +85,5 @@ public abstract class Pagamento implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

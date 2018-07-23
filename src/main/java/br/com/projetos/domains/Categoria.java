@@ -1,4 +1,4 @@
-package br.com.projetos.Domain;
+package br.com.projetos.domains;
 
 import java.io.Serializable;
 import java.util.ArrayList;

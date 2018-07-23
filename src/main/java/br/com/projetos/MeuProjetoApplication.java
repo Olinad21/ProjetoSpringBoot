@@ -6,23 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import br.com.projetos.Domain.Categoria;
-import br.com.projetos.Domain.Cidade;
-import br.com.projetos.Domain.Cliente;
-import br.com.projetos.Domain.Endereco;
-import br.com.projetos.Domain.Estado;
-import br.com.projetos.Domain.Pagamento;
-import br.com.projetos.Domain.PagamentoBoleto;
-import br.com.projetos.Domain.PagamentoCartao;
-import br.com.projetos.Domain.Pedido;
-import br.com.projetos.Domain.Produto;
-import br.com.projetos.Domain.Enums.EstadoPagamento;
-import br.com.projetos.Domain.Enums.TipoCliente;
+
+import br.com.projetos.domains.Categoria;
+import br.com.projetos.domains.Cidade;
+import br.com.projetos.domains.Cliente;
+import br.com.projetos.domains.Endereco;
+import br.com.projetos.domains.Estado;
+import br.com.projetos.domains.ItemPedido;
+import br.com.projetos.domains.Pagamento;
+import br.com.projetos.domains.PagamentoBoleto;
+import br.com.projetos.domains.PagamentoCartao;
+import br.com.projetos.domains.Pedido;
+import br.com.projetos.domains.Produto;
+import br.com.projetos.domains.Enums.EstadoPagamento;
+import br.com.projetos.domains.Enums.TipoCliente;
 import br.com.projetos.repositories.CategoriaRepository;
 import br.com.projetos.repositories.CidadeRepository;
 import br.com.projetos.repositories.ClienteRepository;
 import br.com.projetos.repositories.EnderecoRepository;
 import br.com.projetos.repositories.EstadoRepository;
+import br.com.projetos.repositories.ItemPedidoRepository;
 import br.com.projetos.repositories.PagamentoRepository;
 import br.com.projetos.repositories.PedidoRepository;
 import br.com.projetos.repositories.ProdutoRepository;
@@ -45,7 +48,11 @@ public class MeuProjetoApplication implements CommandLineRunner {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(MeuProjetoApplication.class, args);
 	}
@@ -119,5 +126,20 @@ public class MeuProjetoApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+	
+	
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1,2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2,80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1,800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped1.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 }

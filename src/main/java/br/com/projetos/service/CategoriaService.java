@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.projetos.Domain.Categoria;
+import br.com.projetos.domains.Categoria;
 import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.repositories.CategoriaRepository;
 

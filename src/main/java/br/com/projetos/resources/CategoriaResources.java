@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.projetos.Domain.Categoria;
+import br.com.projetos.domains.Categoria;
 import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.service.CategoriaService;
 

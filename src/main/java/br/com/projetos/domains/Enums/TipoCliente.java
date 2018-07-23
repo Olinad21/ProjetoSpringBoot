@@ -1,16 +1,15 @@
-package br.com.projetos.Domain.Enums;
+package br.com.projetos.domains.Enums;
 
 
-public enum EstadoPagamento {
+public enum TipoCliente {
 	
-	PENDENTE  (1,"Pendente"  ),
-	QUITADO(2,"Quitado"),
-	CANCELADO(3,"Cancelado"),;
+	PESSOAFISICA  (1,"Pessoa Física"  ),
+	PESSOAJURIDICA(2,"Pessoa Jurídica");
 	
 	private Integer cod;
 	private String desc;
 	
-	private EstadoPagamento(Integer cod, String desc) {
+	private TipoCliente(Integer cod, String desc) {
 		this.cod = cod;
 		this.desc = desc;				
 		
@@ -32,15 +31,15 @@ public enum EstadoPagamento {
 		this.desc = desc;
 	}
 	
-	public static EstadoPagamento toEnum(Integer cod) {
+	public static TipoCliente toEnum(Integer cod) {
 		if(cod==null) {			
 			return null;
 		}
 		
-		for (EstadoPagamento x : EstadoPagamento.values()) {
-			if(cod.equals(x.cod)) {
+		for (TipoCliente cliente : TipoCliente.values()) {
+			if(cod.equals(cliente.cod)) {
 				
-				return x;
+				return cliente;
 			}
 			
 		}
