@@ -1,6 +1,5 @@
 package br.com.projetos.resources.handlers;
 
-import java.security.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 
