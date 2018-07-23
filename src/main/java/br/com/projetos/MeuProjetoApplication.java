@@ -65,27 +65,35 @@ public class MeuProjetoApplication implements CommandLineRunner {
 		
 		Estado est1 = new Estado(null,"MINAS GERAIS");
 		Estado est2 = new Estado(null,"SAO PAULO");
+		Estado est3 = new Estado(null,"Brasília");
 		
 		Cidade cid1 = new Cidade(null,"Uberlândia",est1);
 		Cidade cid2 = new Cidade(null,"Sao Paulo",est2);
 		Cidade cid3 = new Cidade(null,"Campinas",est2);
+		Cidade cid4 = new Cidade(null,"Taguatinga",est3);
 		
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
+		est3.getCidades().addAll(Arrays.asList(cid4));
 		
-		estadoRepository.saveAll(Arrays.asList(est1,est2));
-		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
+		estadoRepository.saveAll(Arrays.asList(est1,est2,est3));
+		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3,cid4));
 		
 		Cliente cliente1 = new Cliente(null,"Maria Silva","maria@gmail.com","076.234.234-99",TipoCliente.PESSOAFISICA);
 		cliente1.getTelefones().addAll(Arrays.asList("(61) 98465-9623","(62) 3155-5055"));
 		
+		Cliente cliente2 = new Cliente(null,"Danilo Oliveira","danilooliveira79@gmail.com","803.504.400-21",TipoCliente.PESSOAFISICA);
+		cliente2.getTelefones().addAll(Arrays.asList("(61) 98465-9636",""));
+		
 		Endereco e1 = new Endereco(null,"Rua Flores","203","Ap 802","Jardim","72029-219",cliente1,cid1);
 		Endereco e2 = new Endereco(null,"Avenida Matos","105","Sala 800","Centro","38777-023",cliente1,cid2);
+		Endereco e3 = new Endereco(null,"Comercial Norte","203","Apartamento","Taguatniga Norte","72110-300",cliente2,cid4);
 		
 		cliente1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		cliente2.getEnderecos().addAll(Arrays.asList(e3));
 		
-		clienteRepository.saveAll(Arrays.asList(cliente1));
-		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		clienteRepository.saveAll(Arrays.asList(cliente1,cliente2));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2,e3));
 		
 	}
 }
