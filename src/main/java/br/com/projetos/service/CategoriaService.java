@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.projetos.domains.Categoria;
-import br.com.projetos.exceptions.ObjectNotFoundException;
+import br.com.projetos.exceptions.*;
 import br.com.projetos.repositories.CategoriaRepository;
 
 @Service
@@ -15,19 +15,34 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	/**
+	 * 
+	 * @param id
+	 * @return Categoria
+	 * @throws ObjectNotFoundException
+	 */
 	public Categoria findById(Integer id) throws ObjectNotFoundException {
 
 		Optional<Categoria> obj = categoriaRepository.findById(id);
-
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não econtrado! Id: " + id + " Tipo: " + Categoria.class.getName()));
 	}
 
+	/**
+	 * 
+	 * @param obj
+	 * @return Categoria
+	 */
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
 	}
-
+	
+	/**
+	 * 
+	 * @param obj
+	 * @return Categoria
+	 */
 	public Categoria update(Categoria obj) {
 		findById(obj.getId());
 		// o metodo save serve tanto para salvar tanto para atualizar
@@ -36,8 +51,18 @@ public class CategoriaService {
 		return categoriaRepository.save(obj);
 	}
 	
-	public String  delete(Categoria obj) {
-		categoriaRepository.delete(obj);
-		return "deleted";
+	/**
+	 *
+	 * @param id
+	 */
+	public void  deleteById(Integer id){
+		findById(id);
+		try {
+			categoriaRepository.deleteById(id);
+		} catch (ConstraintViolationException e) {
+			throw new ConstraintViolationException("Não é possivel excluir Categoria que possui produtos");
+		}
+		
+		
 	}
 }

@@ -1,8 +1,6 @@
 package br.com.projetos.resources;
 
-
-import java.net.URI;import javax.sound.midi.Patch;
-import javax.swing.text.html.FormSubmitEvent.MethodType;
+import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.projetos.domains.Categoria;
 import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.service.CategoriaService;
-
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -31,25 +28,26 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(categoria);
 
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = categoriaService.insert(obj);
-		URI uri= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
+				buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	@RequestMapping(value= "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){		
-		obj = categoriaService.update(obj);		
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+		obj = categoriaService.update(obj);
 		return ResponseEntity.noContent().build();
-		
+
 	}
-	
-	@RequestMapping(value= "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@RequestBody Categoria obj, @PathVariable Integer id){		
-		categoriaService.delete(obj);		
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+		categoriaService.deleteById(id);
 		return ResponseEntity.noContent().build();
-		
+
 	}
 }
