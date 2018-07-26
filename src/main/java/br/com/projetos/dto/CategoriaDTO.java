@@ -2,12 +2,17 @@ package br.com.projetos.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import br.com.projetos.domains.Categoria;
 
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	@NotEmpty(message = "Preencimento obrigario do nome")
+	@Size(min=5, max=80,message = "Tamanho deve ser entre 5 a 80 caracteres")
 	private String nome;
 
 	public CategoriaDTO() {

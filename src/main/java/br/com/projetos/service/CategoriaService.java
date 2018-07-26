@@ -74,12 +74,23 @@ public class CategoriaService {
 		
 		
 	}
-	
+	/**
+	 * 
+	 * @param page
+	 * @param size
+	 * @param direction
+	 * @param orderBy
+	 * @return Page
+	 */
 	public Page<Categoria> findPage(Integer page,Integer size,String direction, String orderBy) {
 		
 		@SuppressWarnings("deprecation")
 		PageRequest pageable = new PageRequest(page, size, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageable);
 		
+	}
+	
+	public Categoria fromDTO(CategoriaDTO obj) {		
+		return new Categoria(obj.getId(), obj.getNome());
 	}
 }
