@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import br.com.projetos.domains.Categoria;
 
-public class CategoriasDTO implements Serializable {
+public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String nome;
 
-	public CategoriasDTO() {
+	public CategoriaDTO() {
 
 	}
 
-	public CategoriasDTO(Categoria obj) {
+	public CategoriaDTO(Categoria obj) {
 		this.id= obj.getId();
 		this.nome = obj.getNome();
 	}

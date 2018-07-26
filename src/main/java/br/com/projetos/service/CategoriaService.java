@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.projetos.domains.Categoria;
+import br.com.projetos.dto.CategoriaDTO;
 import br.com.projetos.exceptions.*;
 import br.com.projetos.repositories.CategoriaRepository;
 
@@ -68,6 +72,14 @@ public class CategoriaService {
 			throw new ConstraintViolationException("Não é possivel excluir Categoria que possui produtos");
 		}
 		
+		
+	}
+	
+	public Page<Categoria> findPage(Integer page,Integer size,String direction, String orderBy) {
+		
+		@SuppressWarnings("deprecation")
+		PageRequest pageable = new PageRequest(page, size, Direction.valueOf(direction), orderBy);
+		return categoriaRepository.findAll(pageable);
 		
 	}
 }
