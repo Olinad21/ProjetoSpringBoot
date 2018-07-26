@@ -1,7 +1,8 @@
 package br.com.projetos.resources;
 
 import java.net.URI;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.projetos.domains.Categoria;
+import br.com.projetos.dto.CategoriasDTO;
 import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.service.CategoriaService;
 
@@ -26,6 +28,16 @@ public class CategoriaResources {
 
 		Categoria categoria = categoriaService.findById(id);
 		return ResponseEntity.ok().body(categoria);
+
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriasDTO>> findAll(){
+		List<Categoria> list = categoriaService.findAll();	
+		List<CategoriasDTO> listDTO = list.stream().
+				map(obj -> new CategoriasDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
 
 	}
 
