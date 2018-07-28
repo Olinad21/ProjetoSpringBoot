@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.projetos.domains.Categoria;
+import br.com.projetos.domains.Cliente;
 import br.com.projetos.dto.CategoriaDTO;
 import br.com.projetos.exceptions.*;
 import br.com.projetos.repositories.CategoriaRepository;
@@ -32,8 +33,8 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não econtrado! Id: " + id + " Tipo: " + Categoria.class.getName()));
 	}
-	
-	public List<Categoria> findAll(){		
+
+	public List<Categoria> findAll() {
 		return categoriaRepository.findAll();
 	}
 
@@ -46,34 +47,44 @@ public class CategoriaService {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
 	}
-	
+
 	/**
 	 * 
 	 * @param obj
 	 * @return Categoria
 	 */
 	public Categoria update(Categoria obj) {
-		findById(obj.getId());
-		// o metodo save serve tanto para salvar tanto para atualizar
-		// a diferença esta no id, se estiver nulo ele salva, se ele estiver preeenchido
-		// ele atualiza;
-		return categoriaRepository.save(obj);
+
+		Categoria newObj = findById(obj.getId());
+		updateNewObj(obj, newObj);
+		return categoriaRepository.save(newObj);
+
 	}
-	
+
+	/**
+	 * Atualiza somente o nome e e-mail para o novo objeto
+	 * 
+	 * @param obj
+	 * @param newObj
+	 */
+	private void updateNewObj(Categoria obj, Categoria newObj) {
+		newObj.setNome(obj.getNome());
+	}
+
 	/**
 	 *
 	 * @param id
 	 */
-	public void  deleteById(Integer id){
+	public void deleteById(Integer id) {
 		findById(id);
 		try {
 			categoriaRepository.deleteById(id);
 		} catch (ConstraintViolationException e) {
 			throw new ConstraintViolationException("Não é possivel excluir Categoria que possui produtos");
 		}
-		
-		
+
 	}
+
 	/**
 	 * 
 	 * @param page
@@ -82,15 +93,15 @@ public class CategoriaService {
 	 * @param orderBy
 	 * @return Page
 	 */
-	public Page<Categoria> findPage(Integer page,Integer size,String direction, String orderBy) {
-		
+	public Page<Categoria> findPage(Integer page, Integer size, String direction, String orderBy) {
+
 		@SuppressWarnings("deprecation")
 		PageRequest pageable = new PageRequest(page, size, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageable);
-		
+
 	}
-	
-	public Categoria fromDTO(CategoriaDTO obj) {		
+
+	public Categoria fromDTO(CategoriaDTO obj) {
 		return new Categoria(obj.getId(), obj.getNome());
 	}
 }
