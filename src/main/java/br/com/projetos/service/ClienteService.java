@@ -8,18 +8,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
+import br.com.projetos.domains.Cidade;
 import br.com.projetos.domains.Cliente;
+import br.com.projetos.domains.Endereco;
+import br.com.projetos.domains.Enums.TipoCliente;
 import br.com.projetos.dto.ClienteDTO;
+import br.com.projetos.dto.ClienteNewDTO;
 import br.com.projetos.exceptions.ConstraintViolationException;
 import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.repositories.ClienteRepository;
+import br.com.projetos.repositories.EnderecoRepository;
 
 @Service
 public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public Cliente findById(Integer id) throws ObjectNotFoundException {
 
@@ -29,6 +36,13 @@ public class ClienteService {
 				"Objeto não econtrado! Id: " + id + " Tipo: " + Cliente.class.getName()));
 	}
 
+	public Cliente insert(Cliente obj) {
+		obj.setId(null);
+		obj = clienteRepository.save(obj);
+	    enderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
+	}
+
 	public List<Cliente> findAll() {
 
 		return clienteRepository.findAll();
@@ -36,15 +50,16 @@ public class ClienteService {
 	}
 
 	public Cliente update(Cliente obj) {
-		
+
 		Cliente newObj = findById(obj.getId());
 		updateNewObj(obj, newObj);
 		return clienteRepository.save(newObj);
-		
+
 	}
 
 	/**
 	 * Atualiza somente o nome e e-mail para o novo objeto
+	 * 
 	 * @param obj
 	 * @param newObj
 	 */
@@ -86,5 +101,26 @@ public class ClienteService {
 
 	public Cliente fromDTO(ClienteDTO obj) {
 		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null);
+	}
+
+	public Cliente fromDTO(ClienteNewDTO obj) {
+
+		Cliente cliente = new Cliente(null, obj.getNome(), obj.getEmail(), obj.getCpfOuCnpj(),
+				TipoCliente.toEnum(obj.getTipo()));
+		Cidade cidade = new Cidade(obj.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getNumero(), obj.getComplemtento(), obj.getBairro(),
+				obj.getCep(), cliente, cidade);
+
+		cliente.getEnderecos().add(end);
+		cliente.getTelefones().add(obj.getTelefone1());
+
+		if (obj.getTelefone2() != null) {
+			cliente.getTelefones().add(obj.getTelefone2());
+		}
+		if (obj.getTelefone3() != null) {
+			cliente.getTelefones().add(obj.getTelefone3());
+		}
+
+		return cliente;
 	}
 }
