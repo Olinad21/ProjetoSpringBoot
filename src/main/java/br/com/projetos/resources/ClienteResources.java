@@ -67,9 +67,9 @@ public class ClienteResources {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+	public String  deleteById(@PathVariable Integer id) {
 		clienteService.deleteById(id);
-		return ResponseEntity.noContent().build();
+		return "Deletado com Sucesso";
 
 	}
 
