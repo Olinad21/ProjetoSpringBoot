@@ -14,10 +14,10 @@ import br.com.projetos.domains.Endereco;
 import br.com.projetos.domains.Enums.TipoCliente;
 import br.com.projetos.dto.ClienteDTO;
 import br.com.projetos.dto.ClienteNewDTO;
-import br.com.projetos.exceptions.ConstraintViolationException;
-import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.repositories.ClienteRepository;
 import br.com.projetos.repositories.EnderecoRepository;
+import br.com.projetos.service.exceptions.ConstraintViolationException;
+import br.com.projetos.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {

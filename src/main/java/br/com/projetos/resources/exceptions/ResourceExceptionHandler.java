@@ -1,4 +1,4 @@
-package br.com.projetos.resources.handlers;
+package br.com.projetos.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.projetos.exceptions.ConstraintViolationException;
-import br.com.projetos.exceptions.ObjectNotFoundException;
+import br.com.projetos.service.exceptions.ConstraintViolationException;
+import br.com.projetos.service.exceptions.ObjectNotFoundException;
 
 
 @ControllerAdvice

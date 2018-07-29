@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import br.com.projetos.domains.Categoria;
 import br.com.projetos.domains.Cliente;
 import br.com.projetos.dto.CategoriaDTO;
-import br.com.projetos.exceptions.*;
 import br.com.projetos.repositories.CategoriaRepository;
+import br.com.projetos.service.exceptions.*;
 
 @Service
 public class CategoriaService {

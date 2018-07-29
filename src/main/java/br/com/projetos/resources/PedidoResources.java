@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.projetos.domains.Pedido;
-import br.com.projetos.exceptions.ObjectNotFoundException;
 import br.com.projetos.service.PedidoService;
+import br.com.projetos.service.exceptions.ObjectNotFoundException;
 
 
 @RestController

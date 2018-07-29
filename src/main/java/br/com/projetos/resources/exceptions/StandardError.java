@@ -1,4 +1,4 @@
-package br.com.projetos.resources.handlers;
+package br.com.projetos.resources.exceptions;
 
 import java.io.Serializable;
 
