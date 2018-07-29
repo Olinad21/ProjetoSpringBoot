@@ -5,10 +5,9 @@ import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import br.com.projetos.service.validation.ClienteInsert;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
-
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	/**
 	 * 

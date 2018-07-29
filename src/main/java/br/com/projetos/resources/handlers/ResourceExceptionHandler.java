@@ -1,33 +1,45 @@
 package br.com.projetos.resources.handlers;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.projetos.exceptions.*;
+import br.com.projetos.exceptions.ConstraintViolationException;
+import br.com.projetos.exceptions.ObjectNotFoundException;
 
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException ex,HttpServletRequest request){
-		StandardError error;
-		error =  new StandardError(ex.getMessage(),HttpStatus.NOT_FOUND.value(),System.currentTimeMillis());		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-				
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+				"Não encontrado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
-	
+
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<StandardError> ConstraintViolation(ConstraintViolationException ex,HttpServletRequest request){
-		StandardError error;
-		error =  new StandardError(ex.getMessage(),HttpStatus.BAD_REQUEST.value(),System.currentTimeMillis());		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-		
-		
+	public ResponseEntity<StandardError> dataIntegrity(ConstraintViolationException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Integridade de dados", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+
+		ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				"Erro de validação", e.getMessage(), request.getRequestURI());
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
+			err.addError(x.getField(), x.getDefaultMessage());
+		}
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 }
